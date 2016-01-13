@@ -22,7 +22,7 @@ func bitNames(b byte, bits []string, data map[string]interface{}) map[string]int
 func main() {
 	client := client.NewClient("ws://127.0.0.1:4224")
 
-	controller := rotonde.Definition{"STEAM_CONTROLLER_BUTTONS", "event", false, []*rotonde.FieldDefinition{}}
+	controller := rotonde.Definition{"STEAM_CONTROLLER", "event", false, []*rotonde.FieldDefinition{}}
 	client.AddLocalDefinition(&controller)
 
 	go func() {
@@ -66,10 +66,10 @@ func main() {
 				// but it is actually wrong, bit masks should be used
 
 				data = bitNames(packet[8], []string{"TRIGGER_RIGHT", "TRIGGER_LEFT", "TOP_RIGHT", "TOP_LEFT", "Y", "B", "X", "A"}, data)
-				data = bitNames(packet[9], []string{"PAD_UP", "PAD_RIGHT", "PAD_LEFT", "PAD_DOWN", "CENTER_LEFT", "CENTER_STEAM", "CENTER_RIGHT"}, data)
-				data = bitNames(packet[10], []string{"", "PAD_PRESSED", "MOUSE_PRESSED", "PAD_TOUCHED", "MOUSE_TOUCHED"}, data)
-				data["TRIGGER_LEFT_VALUE"] = int8(packet[11])
-				data["TRIGGER_RIGHT_VALUE"] = int8(packet[12])
+				data = bitNames(packet[9], []string{"PAD_UP", "PAD_RIGHT", "PAD_LEFT", "PAD_DOWN", "CENTER_LEFT", "CENTER_STEAM", "CENTER_RIGHT", "BACK_LEFT"}, data)
+				data = bitNames(packet[10], []string{"BACK_RIGHT", "PAD_PRESSED", "MOUSE_PRESSED", "PAD_TOUCHED", "MOUSE_TOUCHED"}, data)
+				data["TRIGGER_LEFT_VALUE"] = uint8(packet[11])
+				data["TRIGGER_RIGHT_VALUE"] = uint8(packet[12])
 				data["PAD_A"] = int8(packet[16])
 				data["PAD_B"] = int8(packet[17])
 				data["PAD_C"] = int8(packet[18])
@@ -79,7 +79,7 @@ func main() {
 				data["MOUSE_B"] = int8(packet[21])
 				data["MOUSE_C"] = int8(packet[22])
 				data["MOUSE_D"] = int8(packet[23])
-				client.SendEvent("STEAM_CONTROLLER_BUTTONS", data)
+				client.SendEvent("STEAM_CONTROLLER", data)
 
 			}
 			cc.Close()
