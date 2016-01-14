@@ -62,9 +62,6 @@ func main() {
 					break
 				}
 
-				// this is taken from https://github.com/virgilvox/node-steam-controller/blob/master/index.js
-				// but it is actually wrong, bit masks should be used
-
 				data = bitNames(packet[8], []string{"TRIGGER_RIGHT", "TRIGGER_LEFT", "TOP_RIGHT", "TOP_LEFT", "Y", "B", "X", "A"}, data)
 				data = bitNames(packet[9], []string{"PAD_UP", "PAD_RIGHT", "PAD_LEFT", "PAD_DOWN", "CENTER_LEFT", "CENTER_STEAM", "CENTER_RIGHT", "BACK_LEFT"}, data)
 				data = bitNames(packet[10], []string{"BACK_RIGHT", "PAD_PRESSED", "MOUSE_PRESSED", "PAD_TOUCHED", "MOUSE_TOUCHED"}, data)
